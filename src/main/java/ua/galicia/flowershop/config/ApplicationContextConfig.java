@@ -27,7 +27,7 @@ import ua.galicia.flowershop.dao.impl.OrderDAOImpl;
 import ua.galicia.flowershop.dao.impl.FlowerDAOImpl;
 
 @Configuration
-@ComponentScan("ua.beloff.flowershop.*")
+@ComponentScan("ua.galicia.flowershop.*")
 @EnableTransactionManagement
 // Load to Environment.
 @PropertySource("classpath:ds-hibernate-cfg.properties")
@@ -94,7 +94,7 @@ public class ApplicationContextConfig {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
          
         // Package contain entity classes
-        factoryBean.setPackagesToScan(new String[] { "ua.beloff.flowershop.entity" });
+        factoryBean.setPackagesToScan(new String[] { "ua.galicia.flowershop.entity" });
         factoryBean.setDataSource(dataSource);
         factoryBean.setHibernateProperties(properties);
         factoryBean.afterPropertiesSet();
