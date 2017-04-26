@@ -16,7 +16,6 @@ import ua.galicia.flowershop.dao.AccountDAO;
 import ua.galicia.flowershop.entity.Account;
 
 
-
 @Service
 public class MyDBAuthenticationService implements UserDetailsService {
 

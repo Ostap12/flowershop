@@ -28,7 +28,8 @@ import ua.galicia.flowershop.model.OrderDetailInfo;
 import ua.galicia.flowershop.model.OrderInfo;
 import ua.galicia.flowershop.model.PaginationResult;
 import ua.galicia.flowershop.model.ProductInfo;
-import ua.galicia.flowershop.validator.FlowerInfoValidator;
+import ua.galicia.flowershop.validator.ProductInfoValidator;
+
 
 @Controller
 // Enable Hibernate Transaction.
@@ -36,20 +37,20 @@ import ua.galicia.flowershop.validator.FlowerInfoValidator;
 // Need to use RedirectAttributes
 @EnableWebMvc
 public class AdminController {
- 
+
     @Autowired
     private OrderDAO orderDAO;
- 
+
     @Autowired
     private ProductDAO productDAO;
- 
+
     @Autowired
-    private FlowerInfoValidator productInfoValidator;
- 
+    private ProductInfoValidator productInfoValidator;
+
     // Configurated In ApplicationContextConfig.
     @Autowired
     private ResourceBundleMessageSource messageSource;
- 
+
     @InitBinder
     public void myInitBinder(WebDataBinder dataBinder) {
         Object target = dataBinder.getTarget();
@@ -57,36 +58,36 @@ public class AdminController {
             return;
         }
         System.out.println("Target=" + target);
- 
+
         if (target.getClass() == ProductInfo.class) {
             dataBinder.setValidator(productInfoValidator);
             // For upload Image.
             dataBinder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
         }
     }
- 
+
     // GET: Show Login Page
     @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
     public String login(Model model) {
- 
+
         return "login";
     }
- 
+
     @RequestMapping(value = { "/accountInfo" }, method = RequestMethod.GET)
     public String accountInfo(Model model) {
- 
+
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(userDetails.getPassword());
         System.out.println(userDetails.getUsername());
         System.out.println(userDetails.isEnabled());
- 
+
         model.addAttribute("userDetails", userDetails);
         return "accountInfo";
     }
- 
+
     @RequestMapping(value = { "/orderList" }, method = RequestMethod.GET)
     public String orderList(Model model, //
-            @RequestParam(value = "page", defaultValue = "1") String pageStr) {
+                            @RequestParam(value = "page", defaultValue = "1") String pageStr) {
         int page = 1;
         try {
             page = Integer.parseInt(pageStr);
@@ -94,21 +95,21 @@ public class AdminController {
         }
         final int MAX_RESULT = 5;
         final int MAX_NAVIGATION_PAGE = 10;
- 
+
         PaginationResult<OrderInfo> paginationResult //
-        = orderDAO.listOrderInfo(page, MAX_RESULT, MAX_NAVIGATION_PAGE);
- 
+                = orderDAO.listOrderInfo(page, MAX_RESULT, MAX_NAVIGATION_PAGE);
+
         model.addAttribute("paginationResult", paginationResult);
         return "orderList";
     }
- 
+
     // GET: Show product.
     @RequestMapping(value = { "/product" }, method = RequestMethod.GET)
     public String product(Model model, @RequestParam(value = "code", defaultValue = "") String code) {
         ProductInfo productInfo = null;
- 
+
         if (code != null && code.length() > 0) {
-            productInfo = productDAO.findFlowerInfo(code);
+            productInfo = productDAO.findProductInfo(code);
         }
         if (productInfo == null) {
             productInfo = new ProductInfo();
@@ -117,7 +118,7 @@ public class AdminController {
         model.addAttribute("productForm", productInfo);
         return "product";
     }
- 
+
     // POST: Save product
     @RequestMapping(value = { "/product" }, method = RequestMethod.POST)
     // Avoid UnexpectedRollbackException (See more explanations)
@@ -126,7 +127,7 @@ public class AdminController {
                               @ModelAttribute("productForm") @Validated ProductInfo productInfo, //
                               BindingResult result, //
                               final RedirectAttributes redirectAttributes) {
- 
+
         if (result.hasErrors()) {
             return "product";
         }
@@ -138,11 +139,11 @@ public class AdminController {
             model.addAttribute("message", message);
             // Show product form.
             return "product";
- 
+
         }
         return "redirect:/productList";
     }
- 
+
     @RequestMapping(value = { "/order" }, method = RequestMethod.GET)
     public String orderView(Model model, @RequestParam("orderId") String orderId) {
         OrderInfo orderInfo = null;
@@ -154,10 +155,10 @@ public class AdminController {
         }
         List<OrderDetailInfo> details = this.orderDAO.listOrderDetailInfos(orderId);
         orderInfo.setDetails(details);
- 
+
         model.addAttribute("orderInfo", orderInfo);
- 
+
         return "order";
     }
-    
+
 }
