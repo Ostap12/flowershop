@@ -9,14 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ua.galicia.flowershop.dao.AccountDAO;
 import ua.galicia.flowershop.entity.Account;
- 
+
+
 // Transactional for Hibernate
 @Transactional
 public class AccountDAOImpl implements AccountDAO {
-    
+
     @Autowired
     private SessionFactory sessionFactory;
- 
+
     @Override
     public Account findAccount(String userName ) {
         Session session = sessionFactory.getCurrentSession();
@@ -24,5 +25,5 @@ public class AccountDAOImpl implements AccountDAO {
         crit.add(Restrictions.eq("userName", userName));
         return (Account) crit.uniqueResult();
     }
- 
+
 }

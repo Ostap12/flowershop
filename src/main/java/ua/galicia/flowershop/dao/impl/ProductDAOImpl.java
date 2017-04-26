@@ -15,62 +15,65 @@ import ua.galicia.flowershop.entity.Product;
 import ua.galicia.flowershop.model.PaginationResult;
 import ua.galicia.flowershop.model.ProductInfo;
 
+
+
 // Transactional for Hibernate
 @Transactional
 public class ProductDAOImpl implements ProductDAO {
- 
+
     @Autowired
     private SessionFactory sessionFactory;
- 
+
     @Override
-    public Product findFlower(String code) {
+    public Product findProduct(String code) {
         Session session = sessionFactory.getCurrentSession();
         Criteria crit = session.createCriteria(Product.class);
         crit.add(Restrictions.eq("code", code));
         return (Product) crit.uniqueResult();
     }
- 
+
     @Override
-    public ProductInfo findFlowerInfo(String code) {
-        Product product = this.findFlower(code);
+    public ProductInfo findProductInfo(String code) {
+        Product product = this.findProduct(code);
         if (product == null) {
             return null;
         }
         return new ProductInfo(product.getCode(), product.getName(), product.getPrice());
     }
- 
+
     @Override
-    public void save(ProductInfo flowerInfo) {
-        String code = flowerInfo.getCode();
- 
-        Product flower = null;
- 
+    public void save(ProductInfo productInfo) {
+        String code = productInfo.getCode();
+
+        Product product = null;
+
         boolean isNew = false;
         if (code != null) {
-        	flower = this.findFlower(code);
+            product = this.findProduct(code);
         }
-        if (flower == null) {
+        if (product == null) {
             isNew = true;
-            flower = new Product();
-            flower.setCreateDate(new Date());
+            product = new Product();
+            product.setCreateDate(new Date());
         }
-        flower.setCode(code);
-        flower.setName(flowerInfo.getName());
-        flower.setPrice(flowerInfo.getPrice());
- 
-        if (flowerInfo.getFileData() != null) {
-            byte[] image = flowerInfo.getFileData().getBytes();
+        product.setCode(code);
+        product.setName(productInfo.getName());
+        product.setPrice(productInfo.getPrice());
+
+        if (productInfo.getFileData() != null) {
+            byte[] image = productInfo.getFileData().getBytes();
             if (image != null && image.length > 0) {
-            	flower.setImage(image);
+                product.setImage(image);
             }
         }
         if (isNew) {
-            this.sessionFactory.getCurrentSession().persist(flower);
+            this.sessionFactory.getCurrentSession().persist(product);
         }
         // If error in DB, Exceptions will be thrown out immediately
+        // Nếu có lỗi tại DB, ngoại lệ sẽ ném ra ngay lập tức
         this.sessionFactory.getCurrentSession().flush();
     }
- 
+
     @Override
     public PaginationResult<ProductInfo> queryProducts(int page, int maxResult, int maxNavigationPage,
                                                        String likeName) {
@@ -83,17 +86,17 @@ public class ProductDAOImpl implements ProductDAO {
         sql += " order by p.createDate desc ";
         //
         Session session = sessionFactory.getCurrentSession();
- 
+
         Query query = session.createQuery(sql);
         if (likeName != null && likeName.length() > 0) {
             query.setParameter("likeName", "%" + likeName.toLowerCase() + "%");
         }
         return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
     }
- 
+
     @Override
     public PaginationResult<ProductInfo> queryProducts(int page, int maxResult, int maxNavigationPage) {
         return queryProducts(page, maxResult, maxNavigationPage, null);
     }
-    
+
 }
