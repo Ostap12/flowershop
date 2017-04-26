@@ -14,10 +14,10 @@
 <jsp:include page="_header.jsp" />
 <jsp:include page="_menu.jsp" />
 
-<div class="page-title">Shopping Cart Demo</div>
+<div class="page-title">Online courses for students</div>
 
 <div class="demo-container">
-   <h3>Demo content</h3>
+   <h3>Some content</h3>
 
    <ul>
       <li>Buy online</li>

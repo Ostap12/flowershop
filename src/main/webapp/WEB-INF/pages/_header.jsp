@@ -4,7 +4,7 @@
 
 <div class="header-container">
 
-    <div class="site-name">Online Shop</div>
+    <div class="site-name">Online Courses</div>
 
     <div class="header-bar">
         <c:if test="${pageContext.request.userPrincipal.name != null}">
