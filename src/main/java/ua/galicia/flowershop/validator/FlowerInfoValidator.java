@@ -8,7 +8,7 @@ import org.springframework.validation.Validator;
 
 import ua.galicia.flowershop.dao.ProductDAO;
 import ua.galicia.flowershop.entity.Product;
-import ua.galicia.flowershop.model.FlowerInfo;
+import ua.galicia.flowershop.model.ProductInfo;
 
 // @Component: As a Bean.
 @Component
@@ -20,12 +20,12 @@ public class FlowerInfoValidator implements Validator {
     // This Validator support ProductInfo class.
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz == FlowerInfo.class;
+        return clazz == ProductInfo.class;
     }
  
     @Override
     public void validate(Object target, Errors errors) {
-        FlowerInfo productInfo = (FlowerInfo) target;
+        ProductInfo productInfo = (ProductInfo) target;
  
         // Check the fields of ProductInfo class.
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "code", "NotEmpty.productForm.code");

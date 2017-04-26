@@ -27,7 +27,7 @@ import ua.galicia.flowershop.entity.Product;
 import ua.galicia.flowershop.model.CartInfo;
 import ua.galicia.flowershop.model.CustomerInfo;
 import ua.galicia.flowershop.model.PaginationResult;
-import ua.galicia.flowershop.model.FlowerInfo;
+import ua.galicia.flowershop.model.ProductInfo;
 import ua.galicia.flowershop.util.Utils;
 import ua.galicia.flowershop.validator.CustomerInfoValidator;
 
@@ -87,7 +87,7 @@ public class MainController {
         final int maxResult = 5;
         final int maxNavigationPage = 10;
  
-        PaginationResult<FlowerInfo> result = productDAO.queryProducts(page, //
+        PaginationResult<ProductInfo> result = productDAO.queryProducts(page, //
                 maxResult, maxNavigationPage, likeName);
  
         model.addAttribute("paginationProducts", result);
@@ -107,7 +107,7 @@ public class MainController {
             // Cart info stored in Session.
             CartInfo cartInfo = Utils.getCartInSession(request);
  
-            FlowerInfo productInfo = new FlowerInfo(product);
+            ProductInfo productInfo = new ProductInfo(product);
  
             cartInfo.addProduct(productInfo, 1);
         }
@@ -127,7 +127,7 @@ public class MainController {
             // Cart Info stored in Session.
             CartInfo cartInfo = Utils.getCartInSession(request);
  
-            FlowerInfo productInfo = new FlowerInfo(product);
+            ProductInfo productInfo = new ProductInfo(product);
  
             cartInfo.removeProduct(productInfo);
  

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.galicia.flowershop.dao.ProductDAO;
 import ua.galicia.flowershop.entity.Product;
 import ua.galicia.flowershop.model.PaginationResult;
-import ua.galicia.flowershop.model.FlowerInfo;
+import ua.galicia.flowershop.model.ProductInfo;
 
 // Transactional for Hibernate
 @Transactional
@@ -31,16 +31,16 @@ public class ProductDAOImpl implements ProductDAO {
     }
  
     @Override
-    public FlowerInfo findFlowerInfo(String code) {
+    public ProductInfo findFlowerInfo(String code) {
         Product product = this.findFlower(code);
         if (product == null) {
             return null;
         }
-        return new FlowerInfo(product.getCode(), product.getName(), product.getPrice());
+        return new ProductInfo(product.getCode(), product.getName(), product.getPrice());
     }
  
     @Override
-    public void save(FlowerInfo flowerInfo) {
+    public void save(ProductInfo flowerInfo) {
         String code = flowerInfo.getCode();
  
         Product flower = null;
@@ -72,9 +72,9 @@ public class ProductDAOImpl implements ProductDAO {
     }
  
     @Override
-    public PaginationResult<FlowerInfo> queryProducts(int page, int maxResult, int maxNavigationPage,
-            String likeName) {
-        String sql = "Select new " + FlowerInfo.class.getName() //
+    public PaginationResult<ProductInfo> queryProducts(int page, int maxResult, int maxNavigationPage,
+                                                       String likeName) {
+        String sql = "Select new " + ProductInfo.class.getName() //
                 + "(p.code, p.name, p.price) " + " from "//
                 + Product.class.getName() + " p ";
         if (likeName != null && likeName.length() > 0) {
@@ -88,11 +88,11 @@ public class ProductDAOImpl implements ProductDAO {
         if (likeName != null && likeName.length() > 0) {
             query.setParameter("likeName", "%" + likeName.toLowerCase() + "%");
         }
-        return new PaginationResult<FlowerInfo>(query, page, maxResult, maxNavigationPage);
+        return new PaginationResult<ProductInfo>(query, page, maxResult, maxNavigationPage);
     }
  
     @Override
-    public PaginationResult<FlowerInfo> queryProducts(int page, int maxResult, int maxNavigationPage) {
+    public PaginationResult<ProductInfo> queryProducts(int page, int maxResult, int maxNavigationPage) {
         return queryProducts(page, maxResult, maxNavigationPage, null);
     }
     

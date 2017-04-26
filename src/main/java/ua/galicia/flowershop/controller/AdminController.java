@@ -27,7 +27,7 @@ import ua.galicia.flowershop.dao.ProductDAO;
 import ua.galicia.flowershop.model.OrderDetailInfo;
 import ua.galicia.flowershop.model.OrderInfo;
 import ua.galicia.flowershop.model.PaginationResult;
-import ua.galicia.flowershop.model.FlowerInfo;
+import ua.galicia.flowershop.model.ProductInfo;
 import ua.galicia.flowershop.validator.FlowerInfoValidator;
 
 @Controller
@@ -58,7 +58,7 @@ public class AdminController {
         }
         System.out.println("Target=" + target);
  
-        if (target.getClass() == FlowerInfo.class) {
+        if (target.getClass() == ProductInfo.class) {
             dataBinder.setValidator(productInfoValidator);
             // For upload Image.
             dataBinder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
@@ -105,13 +105,13 @@ public class AdminController {
     // GET: Show product.
     @RequestMapping(value = { "/product" }, method = RequestMethod.GET)
     public String product(Model model, @RequestParam(value = "code", defaultValue = "") String code) {
-        FlowerInfo productInfo = null;
+        ProductInfo productInfo = null;
  
         if (code != null && code.length() > 0) {
             productInfo = productDAO.findFlowerInfo(code);
         }
         if (productInfo == null) {
-            productInfo = new FlowerInfo();
+            productInfo = new ProductInfo();
             productInfo.setNewProduct(true);
         }
         model.addAttribute("productForm", productInfo);
@@ -123,9 +123,9 @@ public class AdminController {
     // Avoid UnexpectedRollbackException (See more explanations)
     @Transactional(propagation = Propagation.NEVER)
     public String productSave(Model model, //
-            @ModelAttribute("productForm") @Validated FlowerInfo productInfo, //
-            BindingResult result, //
-            final RedirectAttributes redirectAttributes) {
+                              @ModelAttribute("productForm") @Validated ProductInfo productInfo, //
+                              BindingResult result, //
+                              final RedirectAttributes redirectAttributes) {
  
         if (result.hasErrors()) {
             return "product";
