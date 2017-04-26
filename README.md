@@ -1,2 +1,2 @@
-# flowershop
-Flowershop
+# onlinecourses
+Spring MVC project "Online courses for students"
