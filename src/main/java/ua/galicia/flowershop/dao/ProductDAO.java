@@ -4,7 +4,7 @@ import ua.galicia.flowershop.entity.Flower;
 import ua.galicia.flowershop.model.PaginationResult;
 import ua.galicia.flowershop.model.FlowerInfo;
  
-public interface FlowerDAO {
+public interface ProductDAO {
  
     
     

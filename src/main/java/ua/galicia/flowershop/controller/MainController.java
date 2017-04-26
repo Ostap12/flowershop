@@ -22,7 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.galicia.flowershop.dao.OrderDAO;
-import ua.galicia.flowershop.dao.FlowerDAO;
+import ua.galicia.flowershop.dao.ProductDAO;
 import ua.galicia.flowershop.entity.Flower;
 import ua.galicia.flowershop.model.CartInfo;
 import ua.galicia.flowershop.model.CustomerInfo;
@@ -42,7 +42,7 @@ public class MainController {
     private OrderDAO orderDAO;
  
     @Autowired
-    private FlowerDAO productDAO;
+    private ProductDAO productDAO;
  
     @Autowired
     private CustomerInfoValidator customerInfoValidator;

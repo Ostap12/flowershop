@@ -10,14 +10,14 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.galicia.flowershop.dao.FlowerDAO;
+import ua.galicia.flowershop.dao.ProductDAO;
 import ua.galicia.flowershop.entity.Flower;
 import ua.galicia.flowershop.model.PaginationResult;
 import ua.galicia.flowershop.model.FlowerInfo;
 
 // Transactional for Hibernate
 @Transactional
-public class FlowerDAOImpl implements FlowerDAO {
+public class ProductDAOImpl implements ProductDAO {
  
     @Autowired
     private SessionFactory sessionFactory;

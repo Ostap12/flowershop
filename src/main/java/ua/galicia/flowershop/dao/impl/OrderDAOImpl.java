@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.galicia.flowershop.dao.OrderDAO;
-import ua.galicia.flowershop.dao.FlowerDAO;
+import ua.galicia.flowershop.dao.ProductDAO;
 import ua.galicia.flowershop.entity.Order;
 import ua.galicia.flowershop.entity.OrderDetail;
 import ua.galicia.flowershop.entity.Flower;
@@ -32,7 +32,7 @@ public class OrderDAOImpl implements OrderDAO {
     private SessionFactory sessionFactory;
  
     @Autowired
-    private FlowerDAO productDAO;
+    private ProductDAO productDAO;
  
     private int getMaxOrderNum() {
         String sql = "Select max(o.orderNum) from " + Order.class.getName() + " o ";

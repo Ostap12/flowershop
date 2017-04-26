@@ -23,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.galicia.flowershop.dao.OrderDAO;
-import ua.galicia.flowershop.dao.FlowerDAO;
+import ua.galicia.flowershop.dao.ProductDAO;
 import ua.galicia.flowershop.model.OrderDetailInfo;
 import ua.galicia.flowershop.model.OrderInfo;
 import ua.galicia.flowershop.model.PaginationResult;
@@ -41,7 +41,7 @@ public class AdminController {
     private OrderDAO orderDAO;
  
     @Autowired
-    private FlowerDAO productDAO;
+    private ProductDAO productDAO;
  
     @Autowired
     private FlowerInfoValidator productInfoValidator;
