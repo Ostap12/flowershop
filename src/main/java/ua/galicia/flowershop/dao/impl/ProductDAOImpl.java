@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ua.galicia.flowershop.dao.ProductDAO;
-import ua.galicia.flowershop.entity.Flower;
+import ua.galicia.flowershop.entity.Product;
 import ua.galicia.flowershop.model.PaginationResult;
 import ua.galicia.flowershop.model.FlowerInfo;
 
@@ -23,16 +23,16 @@ public class ProductDAOImpl implements ProductDAO {
     private SessionFactory sessionFactory;
  
     @Override
-    public Flower findFlower(String code) {
+    public Product findFlower(String code) {
         Session session = sessionFactory.getCurrentSession();
-        Criteria crit = session.createCriteria(Flower.class);
+        Criteria crit = session.createCriteria(Product.class);
         crit.add(Restrictions.eq("code", code));
-        return (Flower) crit.uniqueResult();
+        return (Product) crit.uniqueResult();
     }
  
     @Override
     public FlowerInfo findFlowerInfo(String code) {
-        Flower product = this.findFlower(code);
+        Product product = this.findFlower(code);
         if (product == null) {
             return null;
         }
@@ -43,7 +43,7 @@ public class ProductDAOImpl implements ProductDAO {
     public void save(FlowerInfo flowerInfo) {
         String code = flowerInfo.getCode();
  
-        Flower flower = null;
+        Product flower = null;
  
         boolean isNew = false;
         if (code != null) {
@@ -51,7 +51,7 @@ public class ProductDAOImpl implements ProductDAO {
         }
         if (flower == null) {
             isNew = true;
-            flower = new Flower();
+            flower = new Product();
             flower.setCreateDate(new Date());
         }
         flower.setCode(code);
@@ -76,7 +76,7 @@ public class ProductDAOImpl implements ProductDAO {
             String likeName) {
         String sql = "Select new " + FlowerInfo.class.getName() //
                 + "(p.code, p.name, p.price) " + " from "//
-                + Flower.class.getName() + " p ";
+                + Product.class.getName() + " p ";
         if (likeName != null && likeName.length() > 0) {
             sql += " Where lower(p.name) like :likeName ";
         }

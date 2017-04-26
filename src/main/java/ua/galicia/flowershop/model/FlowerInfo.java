@@ -2,7 +2,7 @@ package ua.galicia.flowershop.model;
  
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import ua.galicia.flowershop.entity.Flower;
+import ua.galicia.flowershop.entity.Product;
  
 public class FlowerInfo {
     private String code;
@@ -17,7 +17,7 @@ public class FlowerInfo {
     public FlowerInfo() {
     }
  
-    public FlowerInfo(Flower product) {
+    public FlowerInfo(Product product) {
         this.code = product.getCode();
         this.name = product.getName();
         this.price = product.getPrice();

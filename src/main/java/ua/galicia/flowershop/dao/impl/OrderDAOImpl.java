@@ -16,7 +16,7 @@ import ua.galicia.flowershop.dao.OrderDAO;
 import ua.galicia.flowershop.dao.ProductDAO;
 import ua.galicia.flowershop.entity.Order;
 import ua.galicia.flowershop.entity.OrderDetail;
-import ua.galicia.flowershop.entity.Flower;
+import ua.galicia.flowershop.entity.Product;
 import ua.galicia.flowershop.model.CartInfo;
 import ua.galicia.flowershop.model.CartLineInfo;
 import ua.galicia.flowershop.model.CustomerInfo;
@@ -76,7 +76,7 @@ public class OrderDAOImpl implements OrderDAO {
             detail.setQuanity(line.getQuantity());
  
             String code = line.getProductInfo().getCode();
-            Flower product = this.productDAO.findFlower(code);
+            Product product = this.productDAO.findFlower(code);
             detail.setProduct(product);
  
             session.persist(detail);

@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.galicia.flowershop.dao.OrderDAO;
 import ua.galicia.flowershop.dao.ProductDAO;
-import ua.galicia.flowershop.entity.Flower;
+import ua.galicia.flowershop.entity.Product;
 import ua.galicia.flowershop.model.CartInfo;
 import ua.galicia.flowershop.model.CustomerInfo;
 import ua.galicia.flowershop.model.PaginationResult;
@@ -98,7 +98,7 @@ public class MainController {
     public String listProductHandler(HttpServletRequest request, Model model, //
             @RequestParam(value = "code", defaultValue = "") String code) {
  
-        Flower product = null;
+        Product product = null;
         if (code != null && code.length() > 0) {
             product = productDAO.findFlower(code);
         }
@@ -118,7 +118,7 @@ public class MainController {
     @RequestMapping({ "/shoppingCartRemoveProduct" })
     public String removeProductHandler(HttpServletRequest request, Model model, //
             @RequestParam(value = "code", defaultValue = "") String code) {
-        Flower product = null;
+        Product product = null;
         if (code != null && code.length() > 0) {
             product = productDAO.findFlower(code);
         }
@@ -268,7 +268,7 @@ public class MainController {
     @RequestMapping(value = { "/productImage" }, method = RequestMethod.GET)
     public void productImage(HttpServletRequest request, HttpServletResponse response, Model model,
             @RequestParam("code") String code) throws IOException {
-        Flower product = null;
+        Product product = null;
         if (code != null) {
             product = this.productDAO.findFlower(code);
         }

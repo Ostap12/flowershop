@@ -1,6 +1,6 @@
 package ua.galicia.flowershop.dao;
  
-import ua.galicia.flowershop.entity.Flower;
+import ua.galicia.flowershop.entity.Product;
 import ua.galicia.flowershop.model.PaginationResult;
 import ua.galicia.flowershop.model.FlowerInfo;
  
@@ -8,7 +8,7 @@ public interface ProductDAO {
  
     
     
-    public Flower findFlower(String code);
+    public Product findFlower(String code);
     
     public FlowerInfo findFlowerInfo(String code) ;
   

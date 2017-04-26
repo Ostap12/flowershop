@@ -7,7 +7,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import ua.galicia.flowershop.dao.ProductDAO;
-import ua.galicia.flowershop.entity.Flower;
+import ua.galicia.flowershop.entity.Product;
 import ua.galicia.flowershop.model.FlowerInfo;
 
 // @Component: As a Bean.
@@ -37,7 +37,7 @@ public class FlowerInfoValidator implements Validator {
             if (code.matches("\\s+")) {
                 errors.rejectValue("code", "Pattern.productForm.code");
             } else if(productInfo.isNewProduct()) {
-                Flower product = flowerDAO.findFlower(code);
+                Product product = flowerDAO.findFlower(code);
                 if (product != null) {
                     errors.rejectValue("code", "Duplicate.productForm.code");
                 }
